@@ -1,0 +1,478 @@
+/* ==========================================================
+   PUPQC CAMPUS PLANT DATABASE - MAIN STYLESHEET
+   Brand Colors: PUP Maroon (#800000, #670000) & Gold (#FFC107)
+   ========================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --pup-maroon: #800000;
+    --pup-dark-maroon: #580000;
+    --pup-header-maroon: #680000;
+    --pup-gold: #FFC107;
+    --pup-light-gold: #FFF4D0;
+    --pup-gray-bg: #f8f9fa;
+    --pup-text-dark: #212529;
+    --pup-text-muted: #6c757d;
+    --font-heading: 'Playfair Display', Georgia, serif;
+    --font-brand: 'Cinzel', 'Times New Roman', serif;
+    --font-body: 'Poppins', system-ui, -apple-system, sans-serif;
+}
+
+body {
+    font-family: var(--font-body);
+    color: var(--pup-text-dark);
+    background-color: #ffffff;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+/* ----------------------------------------------------------
+   Top Navigation Bar (Header)
+   ---------------------------------------------------------- */
+.pup-top-header {
+    background-color: var(--pup-header-maroon);
+    color: #ffffff;
+    padding: 12px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 1030;
+}
+
+.pup-top-header .brand-title {
+    font-family: var(--font-brand);
+    font-size: 1.35rem;
+    letter-spacing: 2px;
+    font-weight: 700;
+    color: #ffffff;
+    text-transform: uppercase;
+    text-align: center;
+    flex-grow: 1;
+}
+
+.pup-top-header .header-icon-btn {
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    font-size: 1.3rem;
+    cursor: pointer;
+    padding: 4px 10px;
+    transition: color 0.2s ease-in-out;
+}
+
+.pup-top-header .header-icon-btn:hover {
+    color: var(--pup-gold);
+}
+
+/* ----------------------------------------------------------
+   Hero Section & Header Image Placeholder
+   ---------------------------------------------------------- */
+.hero-wrapper {
+    position: relative;
+    width: 100%;
+    min-height: 400px;
+    height: 52vh;
+    background-color: #2b2b2b;
+    color: #ffffff;
+    overflow: hidden;
+}
+
+/* Responsive customizable header image container */
+.hero-bg-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    filter: brightness(0.72);
+}
+
+/* Overlay dark tint for readability */
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0.65) 100%);
+    display: flex;
+    align-items: center;
+    padding: 0 8%;
+}
+
+.hero-content {
+    max-width: 800px;
+    z-index: 2;
+}
+
+.hero-content h1 {
+    font-family: var(--font-heading);
+    font-size: 3.6rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+.hero-content p {
+    font-size: 1.35rem;
+    font-weight: 300;
+    opacity: 0.95;
+    letter-spacing: 0.5px;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.6);
+}
+
+/* Visual banner badge showing photo replacement hint */
+.hero-placeholder-badge {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: rgba(128, 0, 0, 0.85);
+    border: 1px dashed var(--pup-gold);
+    color: var(--pup-gold);
+    padding: 6px 14px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    z-index: 10;
+    font-weight: 500;
+}
+
+/* ----------------------------------------------------------
+   Secondary Sub-Navigation Bar
+   ---------------------------------------------------------- */
+.sub-navbar-container {
+    background-color: var(--pup-maroon);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    margin-top: -30px;
+    position: relative;
+    z-index: 20;
+    border-top: 3px solid var(--pup-gold);
+}
+
+.sub-navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0;
+    flex-wrap: wrap;
+}
+
+.sub-nav-brand {
+    background-color: var(--pup-dark-maroon);
+    color: #ffffff;
+    font-size: 1.3rem;
+    font-family: var(--font-heading);
+    padding: 16px 28px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    border-right: 2px solid var(--pup-gold);
+}
+
+.sub-nav-links {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex-wrap: wrap;
+}
+
+.sub-nav-links li a {
+    color: #ffffff;
+    text-decoration: none;
+    padding: 18px 18px;
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: all 0.2s ease-in-out;
+}
+
+.sub-nav-links li a:hover,
+.sub-nav-links li a.active {
+    background-color: rgba(255, 193, 7, 0.2);
+    color: var(--pup-gold);
+}
+
+/* ----------------------------------------------------------
+   Main Content Intro Section
+   ---------------------------------------------------------- */
+.section-intro {
+    padding: 60px 0 30px 0;
+}
+
+.section-intro-title {
+    font-family: var(--font-heading);
+    font-size: 2.2rem;
+    color: var(--pup-maroon);
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.section-intro-text {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: #444444;
+}
+
+/* ----------------------------------------------------------
+   Plant Catalog & Search Controls
+   ---------------------------------------------------------- */
+.catalog-section {
+    background-color: var(--pup-gray-bg);
+    padding: 50px 0;
+    border-top: 1px solid #e9ecef;
+}
+
+.search-filter-card {
+    background: #ffffff;
+    padding: 24px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    border-left: 4px solid var(--pup-maroon);
+    margin-bottom: 35px;
+}
+
+.btn-pup {
+    background-color: var(--pup-maroon);
+    color: #ffffff;
+    font-weight: 600;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+.btn-pup:hover {
+    background-color: var(--pup-dark-maroon);
+    color: var(--pup-gold);
+}
+
+.btn-pup-outline {
+    border: 2px solid var(--pup-maroon);
+    color: var(--pup-maroon);
+    font-weight: 600;
+    background: transparent;
+    padding: 8px 18px;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+.btn-pup-outline:hover {
+    background-color: var(--pup-maroon);
+    color: #ffffff;
+}
+
+/* Plant Card Styling */
+.plant-card {
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #ffffff;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.plant-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 28px rgba(128, 0, 0, 0.15);
+}
+
+.plant-card-img-wrapper {
+    position: relative;
+    height: 220px;
+    overflow: hidden;
+    background-color: #e9ecef;
+}
+
+.plant-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.plant-card:hover .plant-card-img {
+    transform: scale(1.06);
+}
+
+.badge-status {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    font-size: 0.75rem;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.badge-vulnerable {
+    background-color: #ff9800;
+    color: #ffffff;
+}
+
+.badge-least-concern {
+    background-color: #2e7d32;
+    color: #ffffff;
+}
+
+.plant-card-body {
+    padding: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.plant-scientific-name {
+    font-style: italic;
+    color: var(--pup-text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 4px;
+}
+
+.plant-common-name {
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--pup-maroon);
+    margin-bottom: 8px;
+}
+
+.plant-meta-info {
+    font-size: 0.85rem;
+    color: #555555;
+    margin-bottom: 12px;
+}
+
+.plant-meta-info i {
+    color: var(--pup-maroon);
+    margin-right: 6px;
+}
+
+.plant-card-footer {
+    padding: 0 20px 20px 20px;
+    background: transparent;
+    border-top: none;
+}
+
+/* ----------------------------------------------------------
+   Modal Details Customization
+   ---------------------------------------------------------- */
+.modal-header-pup {
+    background-color: var(--pup-maroon);
+    color: #ffffff;
+    border-bottom: 3px solid var(--pup-gold);
+}
+
+.modal-header-pup .btn-close {
+    filter: invert(1);
+}
+
+.detail-section-title {
+    font-weight: 700;
+    color: var(--pup-maroon);
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 15px;
+    margin-bottom: 6px;
+}
+
+/* ----------------------------------------------------------
+   Footer & Cookie Notice (Matching Reference Screenshot)
+   ---------------------------------------------------------- */
+.pup-footer {
+    background-color: var(--pup-dark-maroon);
+    color: #ffffff;
+    padding: 35px 0 20px 0;
+    border-top: 4px solid var(--pup-gold);
+}
+
+.cookie-notice-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #f8f9fa;
+    border-top: 1px solid #dee2e6;
+    padding: 14px 24px;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+    z-index: 1050;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.cookie-notice-text {
+    font-size: 0.82rem;
+    color: #495057;
+    margin: 0;
+}
+
+.cookie-notice-text a {
+    color: var(--pup-maroon);
+    text-decoration: underline;
+}
+
+.cookie-btn-accept {
+    background: #ffffff;
+    border: 1px solid #ced4da;
+    color: #0033aa;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 8px 22px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-transform: UPPERCASE;
+}
+
+.cookie-btn-accept:hover {
+    background: #e9ecef;
+}
+
+.cookie-btn-decline {
+    background: #ffffff;
+    border: 1px solid #ced4da;
+    color: #0033aa;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 8px 22px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-transform: UPPERCASE;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .pup-top-header .brand-title {
+        font-size: 1rem;
+    }
+    .hero-content h1 {
+        font-size: 2.3rem;
+    }
+    .hero-content p {
+        font-size: 1rem;
+    }
+    .sub-nav-brand {
+        width: 100%;
+        text-align: center;
+        border-right: none;
+        border-bottom: 1px solid var(--pup-gold);
+    }
+    .sub-nav-links {
+        width: 100%;
+        justify-content: center;
+    }
+}

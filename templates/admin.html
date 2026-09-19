@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Portal | Campus Flora Information Management System</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Custom Theme Stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="bg-light">
+
+    <!-- Top Navigation Header -->
+    <header class="pup-top-header">
+        <a href="/" class="btn btn-sm btn-outline-light me-2"><i class="fas fa-arrow-left me-1"></i> Back to Website</a>
+        <div class="brand-title">CAMPUS FLORA INFORMATION MANAGEMENT SYSTEM - ADMIN</div>
+    </header>
+
+    <div class="container my-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h2 class="fw-bold text-danger mb-1" style="font-family: var(--font-heading);">Database Management</h2>
+                <p class="text-muted small">Manage, edit, or remove plant inventory entries for PUPQC.</p>
+            </div>
+            <a href="/" class="btn btn-pup"><i class="fas fa-eye me-1"></i> View Main Directory</a>
+        </div>
+
+        <!-- Plants Table Card -->
+        <div class="card border-0 shadow-sm rounded-3">
+            <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
+                <h5 class="fw-bold mb-0 text-dark"><i class="fas fa-table me-2 text-danger"></i>Flora Records</h5>
+                <span id="adminRecordCount" class="badge bg-danger">Loading...</span>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0" id="adminPlantsTable">
+                        <thead class="table-dark" style="background-color: var(--pup-maroon);">
+                            <tr>
+                                <th>#</th>
+                                <th>Common Name</th>
+                                <th>Scientific Name</th>
+                                <th>Family</th>
+                                <th>Campus Location</th>
+                                <th>Status</th>
+                                <th class="text-center">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminTableBody">
+                            <tr>
+                                <td colspan="7" class="text-center py-4 text-muted">Loading flora entries...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS & Admin logic -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", fetchAdminPlants);
+
+        async function fetchAdminPlants() {
+            try {
+                const res = await fetch("/api/plants");
+                const data = await res.json();
+                if (data.status === "success") {
+                    renderAdminTable(data.plants);
+                }
+            } catch (err) {
+                console.error("Admin fetch error:", err);
+            }
+        }
+
+        function renderAdminTable(plants) {
+            const tbody = document.getElementById("adminTableBody");
+            document.getElementById("adminRecordCount").textContent = `${plants.length} Total Records`;
+
+            if (plants.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" class="text-center py-4 text-muted">No records found in database.</td></tr>`;
+                return;
+            }
+
+            let html = "";
+            plants.forEach((p, idx) => {
+                html += `
+                    <tr>
+                        <td>${p.id}</td>
+                        <td class="fw-bold text-danger">${escapeHtml(p.common_name)}</td>
+                        <td class="fst-italic">${escapeHtml(p.scientific_name)}</td>
+                        <td>${escapeHtml(p.family || '-')}</td>
+                        <td><small>${escapeHtml(p.location_in_campus)}</small></td>
+                        <td><span class="badge ${p.conservation_status === 'Vulnerable' ? 'bg-warning text-dark' : 'bg-success'}">${escapeHtml(p.conservation_status)}</span></td>
+                        <td class="text-center">
+                            <button class="btn btn-sm btn-outline-danger" onclick="deletePlant(${p.id})">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = html;
+        }
+
+        async function deletePlant(id) {
+            if (!confirm(`Are you sure you want to delete plant record #${id}?`)) return;
+
+            try {
+                const res = await fetch(`/api/plants/${id}`, { method: "DELETE" });
+                const data = await res.json();
+                if (data.status === "success") {
+                    alert("Plant entry deleted!");
+                    fetchAdminPlants();
+                } else {
+                    alert("Delete failed: " + data.message);
+                }
+            } catch (err) {
+                alert("Server error when deleting plant.");
+            }
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+        }
+    </script>
+</body>
+</html>

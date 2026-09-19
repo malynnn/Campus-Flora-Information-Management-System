@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Flora Information Management System | PUPQC</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Custom PUP Theme Stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <!-- ==========================================================
+         TOP HEADER BAR (PUP Maroon Theme)
+         ========================================================== -->
+    <header class="pup-top-header">
+        <button class="header-icon-btn" aria-label="Toggle Navigation" data-bs-toggle="offcanvas" data-bs-target="#sidebarNav">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <div class="brand-title">
+            POLYTECHNIC UNIVERSITY OF THE PHILIPPINES QUEZON CITY
+        </div>
+
+        <button class="header-icon-btn" aria-label="Search" onclick="document.getElementById('searchInput').focus(); document.getElementById('directorySection').scrollIntoView({behavior: 'smooth'});">
+            <i class="fas fa-search"></i>
+        </button>
+    </header>
+
+    <!-- ==========================================================
+         HERO BANNER (PUPQC Campus Entrance)
+         ========================================================== -->
+    <div class="hero-wrapper">
+        <img src="{{ url_for('static', filename='images/campus_header.jpg') }}" 
+             alt="PUPQC Campus Header" 
+             class="hero-bg-image"
+             id="campusHeaderPhoto">
+
+        <div class="hero-overlay">
+            <div class="hero-content">
+                <h1>Campus Flora</h1>
+                <p class="fs-4 text-warning fw-semibold mb-1">Information Management System</p>
+                <p class="small text-light opacity-75">PUPQC Campus Biodiversity & Botanical Database</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================================
+         SECONDARY SUB-NAVIGATION BAR
+         ========================================================== -->
+    <div class="container-fluid px-0">
+        <div class="sub-navbar-container">
+            <div class="container px-0 px-md-3">
+                <nav class="sub-navbar">
+                    <div class="sub-nav-brand">
+                        <i class="fas fa-leaf text-warning me-2"></i>PUPQC Home
+                    </div>
+                    <ul class="sub-nav-links">
+                        <li><a href="#about" class="active">ABOUT PUPQC</a></li>
+                        <li><a href="#directorySection">PLANT DIRECTORY</a></li>
+                        <li><a href="#mapSection">MAP & LOCATIONS</a></li>
+                        <li><a href="#research">RESEARCH</a></li>
+                        <li><a href="#resources">RESOURCES</a></li>
+                        <li>
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#addPlantModal" class="text-warning">
+                                <i class="fas fa-plus-circle me-1"></i>ADD PLANT
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================================
+         MAIN CONTENT - ABOUT & ECOSYSTEM COMMITMENT
+         ========================================================== -->
+    <main>
+        <section id="about" class="section-intro container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h2 class="section-intro-title">Campus Flora Information Management System</h2>
+                    <p class="section-intro-text">
+                        The University is dedicated to ensuring the conservation, restoration, and sustainable use of the campus ecosystem. By highlighting the need for increased awareness and appreciation of urban biodiversity, efforts to research campus flora and fauna enables the formation of measures to protect local species, promote environmental stewardship, and serve as a living botanical database for the PUPQC community.
+                    </p>
+                </div>
+                <div class="col-lg-4 text-end d-none d-lg-block">
+                    <div class="p-4 bg-light rounded-3 border-start border-4 border-danger shadow-sm text-start">
+                        <h6 class="fw-bold text-danger text-uppercase mb-2">
+                            <i class="fas fa-database me-2"></i>Database Engine
+                        </h6>
+                        <p class="small text-muted mb-2">Connected Engine:</p>
+                        <span id="dbStatusBadge" class="badge bg-secondary mb-3">Checking...</span>
+                        <div class="d-grid">
+                            <a href="/admin" class="btn btn-sm btn-pup">
+                                <i class="fas fa-cog me-1"></i> Open Admin Portal
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================================
+             PLANT CATALOG / DIRECTORY SECTION
+             ========================================================== -->
+        <section id="directorySection" class="catalog-section">
+            <div class="container">
+                <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+                    <div>
+                        <h3 class="fw-bold text-dark mb-1" style="font-family: var(--font-heading);">
+                            PUPQC Botanical Directory
+                        </h3>
+                        <p class="text-muted small mb-0" id="plantCount">Loading campus flora inventory...</p>
+                    </div>
+
+                    <button class="btn btn-pup" data-bs-toggle="modal" data-bs-target="#addPlantModal">
+                        <i class="fas fa-plus me-1"></i> Add New Plant Entry
+                    </button>
+                </div>
+
+                <!-- Search & Category Filters -->
+                <div class="search-filter-card">
+                    <div class="row g-3">
+                        <div class="col-md-7">
+                            <label for="searchInput" class="form-label small fw-semibold text-muted">Search Flora Database</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-white border-end-0"><i class="fas fa-search text-muted"></i></span>
+                                <input type="text" id="searchInput" class="form-control border-start-0" placeholder="Search by Common Name, Scientific Name, Family, or Campus Location...">
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <label for="categoryFilter" class="form-label small fw-semibold text-muted">Filter by Plant Category</label>
+                            <select id="categoryFilter" class="form-select">
+                                <option value="">All Plant Categories</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dynamic Plant Cards Grid -->
+                <div class="row" id="plantGridContainer">
+                    <!-- Loaded dynamically via static/js/main.js -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ==========================================================
+         PLANT DETAILS MODAL
+         ========================================================== -->
+    <div class="modal fade" id="plantDetailModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header modal-header-pup">
+                    <h5 class="modal-title fw-bold">
+                        <i class="fas fa-leaf me-2 text-warning"></i><span id="modalCommonName">Plant Title</span>
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="row">
+                        <div class="col-md-5 mb-3 mb-md-0">
+                            <div class="rounded overflow-hidden shadow-sm border">
+                                <img id="modalPlantImg" src="" alt="Plant image" class="img-fluid w-100" style="max-height: 320px; object-fit: cover;">
+                            </div>
+                            <div class="mt-3 p-3 bg-light rounded text-center">
+                                <span class="small text-muted d-block mb-1">Conservation Status</span>
+                                <span id="modalConservation" class="badge bg-success px-3 py-2 fs-6">Least Concern</span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-7">
+                            <p class="fst-italic text-muted mb-1" id="modalScientificName">Scientific Name</p>
+                            <h4 class="fw-bold text-danger mb-3" id="modalLocalName">Local Name</h4>
+
+                            <div class="row g-2 mb-3 small">
+                                <div class="col-6">
+                                    <strong><i class="fas fa-sitemap text-danger me-1"></i> Family:</strong> 
+                                    <span id="modalFamily">Family</span>
+                                </div>
+                                <div class="col-6">
+                                    <strong><i class="fas fa-tag text-danger me-1"></i> Category:</strong> 
+                                    <span id="modalCategory">Category</span>
+                                </div>
+                                <div class="col-12 mt-2">
+                                    <strong><i class="fas fa-map-marker-alt text-danger me-1"></i> Campus Location:</strong> 
+                                    <span id="modalLocation" class="text-primary fw-medium">Location</span>
+                                </div>
+                            </div>
+
+                            <hr>
+
+                            <div class="detail-section-title">Botanical Description</div>
+                            <p class="small text-secondary" id="modalDescription">Description details...</p>
+
+                            <div class="detail-section-title">Medicinal / Traditional Uses</div>
+                            <p class="small text-secondary" id="modalMedicinal">Medicinal details...</p>
+
+                            <div class="detail-section-title">Ecological Role in PUPQC</div>
+                            <p class="small text-secondary mb-0" id="modalEcological">Ecological details...</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer bg-light">
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================================
+         ADD NEW PLANT MODAL (Admin Data Entry)
+         ========================================================== -->
+    <div class="modal fade" id="addPlantModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header modal-header-pup">
+                    <h5 class="modal-title fw-bold">
+                        <i class="fas fa-plus-circle me-2 text-warning"></i>Add New Plant to PUPQC Database
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="addPlantForm">
+                    <div class="modal-body p-4">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small">Common Name <span class="text-danger">*</span></label>
+                                <input type="text" name="common_name" class="form-control" required placeholder="e.g. Narra">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small">Scientific Name <span class="text-danger">*</span></label>
+                                <input type="text" name="scientific_name" class="form-control" required placeholder="e.g. Pterocarpus indicus">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small">Local Name / Tagalog Name</label>
+                                <input type="text" name="local_name" class="form-control" placeholder="e.g. Narra">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small">Family Name</label>
+                                <input type="text" name="family" class="form-control" placeholder="e.g. Fabaceae">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small">Category</label>
+                                <select name="category_id" id="plantCategorySelect" class="form-select">
+                                    <option value="">Select Category</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small">Conservation Status</label>
+                                <select name="conservation_status" class="form-select">
+                                    <option value="Least Concern">Least Concern</option>
+                                    <option value="Vulnerable">Vulnerable</option>
+                                    <option value="Endangered">Endangered</option>
+                                    <option value="Critically Endangered">Critically Endangered</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-semibold small">Campus Location in PUPQC <span class="text-danger">*</span></label>
+                                <input type="text" name="location_in_campus" class="form-control" required placeholder="e.g. Main Quadrangle & East Lawn">
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-semibold small">Image URL</label>
+                                <input type="url" name="image_url" class="form-control" placeholder="https://example.com/plant.jpg">
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-semibold small">Description</label>
+                                <textarea name="description" class="form-control" rows="2" placeholder="Botanical description..."></textarea>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small">Medicinal Uses</label>
+                                <textarea name="medicinal_uses" class="form-control" rows="2" placeholder="Herbal or traditional uses..."></textarea>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small">Ecological Role</label>
+                                <textarea name="ecological_role" class="form-control" rows="2" placeholder="Shade, habitat, soil nitrogen..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer bg-light">
+                        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-pup btn-sm"><i class="fas fa-save me-1"></i> Save Plant Entry</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================================
+         OFFCANVAS SIDEBAR NAV
+         ========================================================== -->
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="sidebarNav">
+        <div class="offcanvas-header text-white" style="background-color: var(--pup-maroon);">
+            <h5 class="offcanvas-title fw-bold"><i class="fas fa-university me-2"></i>PUPQC Navigation</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><a href="/" class="text-decoration-none text-dark fw-medium"><i class="fas fa-home me-2 text-danger"></i> Home</a></li>
+                <li class="list-group-item"><a href="#directorySection" data-bs-dismiss="offcanvas" class="text-decoration-none text-dark fw-medium"><i class="fas fa-leaf me-2 text-danger"></i> Plant Directory</a></li>
+                <li class="list-group-item"><a href="/admin" class="text-decoration-none text-dark fw-medium"><i class="fas fa-cogs me-2 text-danger"></i> Admin Management Portal</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ==========================================================
+         FOOTER & COOKIE BANNER (Exact reference match)
+         ========================================================== -->
+    <footer class="pup-footer">
+        <div class="container text-center">
+            <p class="mb-1 fw-bold">POLYTECHNIC UNIVERSITY OF THE PHILIPPINES QUEZON CITY</p>
+            <p class="small text-white-50 mb-0">Campus Flora Information Management System &copy; 2026</p>
+        </div>
+    </footer>
+
+    <!-- Cookie Notice Bar (Matches prompt reference image) -->
+    <div id="cookieBanner" class="cookie-notice-banner">
+        <p class="cookie-notice-text">
+            We use cookies on this site to enhance your user experience. By clicking the Accept button, you agree to us doing so. 
+            <a href="#" class="ms-1">More info</a>
+        </p>
+        <div class="d-flex gap-2">
+            <button class="cookie-btn-accept" onclick="acceptCookies()">ACCEPT</button>
+            <button class="cookie-btn-decline" onclick="declineCookies()">NO, THANKS</button>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom Application JS -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
