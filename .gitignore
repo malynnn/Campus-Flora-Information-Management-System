@@ -2,7 +2,7 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
-*.sqlite
+# *.sqlite  ← intentionally included for deployment
 .env
 venv/
 env/
