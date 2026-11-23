@@ -9,6 +9,10 @@ document.addEventListener("DOMContentLoaded", () => {
     checkDatabaseStatus();
     setupEventListeners();
     initCookieNotice();
+
+    // Enable Bootstrap tooltips (for conservation status legend)
+    const tooltipEls = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+    tooltipEls.forEach(el => new bootstrap.Tooltip(el, { html: false }));
 });
 
 // State

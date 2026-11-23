@@ -359,6 +359,27 @@ body {
     color: #ffffff;
 }
 
+/* Conservation Status Legend */
+.conservation-legend {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 10px;
+    padding: 12px 18px;
+}
+
+.legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+}
+
+.legend-desc {
+    font-size: 0.75rem;
+    color: #6c757d;
+    font-style: italic;
+}
+
 .plant-card-body {
     padding: 20px;
     flex-grow: 1;

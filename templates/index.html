@@ -141,6 +141,28 @@
                     </div>
                 </div>
 
+                <!-- Conservation Status Legend -->
+                <div class="conservation-legend mb-4">
+                    <div class="d-flex align-items-center flex-wrap gap-3">
+                        <span class="small fw-semibold text-muted me-1"><i class="fas fa-info-circle me-1"></i>Conservation Status:</span>
+                        <span class="legend-item" data-bs-toggle="tooltip" data-bs-placement="top"
+                            title="Least Concern — The species is widespread and abundant. It currently faces no major threats to its survival.">
+                            <span class="badge badge-least-concern px-2 py-1">Least Concern</span>
+                            <span class="legend-desc">Widespread &amp; stable</span>
+                        </span>
+                        <span class="legend-item" data-bs-toggle="tooltip" data-bs-placement="top"
+                            title="Vulnerable — The species faces a high risk of endangerment in the wild if the causes of its decline continue. Listed under the IUCN Red List.">
+                            <span class="badge badge-vulnerable px-2 py-1">Vulnerable</span>
+                            <span class="legend-desc">At risk of extinction</span>
+                        </span>
+                        <span class="legend-item" data-bs-toggle="tooltip" data-bs-placement="top"
+                            title="Concerning — This species poses an ecological threat within PUPQC campus. It competes aggressively with surrounding native plants, suppressing or harming neighboring vegetation.">
+                            <span class="badge badge-concerning px-2 py-1">Concerning</span>
+                            <span class="legend-desc">Ecologically harmful to campus flora</span>
+                        </span>
+                    </div>
+                </div>
+
                 <!-- Dynamic Plant Cards Grid -->
                 <div class="row" id="plantGridContainer">
                     <!-- Loaded dynamically via static/js/main.js -->
