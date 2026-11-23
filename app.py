@@ -69,7 +69,7 @@ def get_plants():
         sql += " AND p.category_id = %s"
         params.append(int(category_id))
 
-    sql += " ORDER BY p.id DESC"
+    sql += " ORDER BY CASE WHEN p.image_url IS NULL THEN 1 ELSE 0 END ASC, p.id ASC"
     
     plants = db.execute_query(sql, tuple(params))
     return jsonify({"status": "success", "count": len(plants), "plants": plants})
@@ -104,7 +104,7 @@ def add_plant():
     description = data.get("description", "").strip()
     medicinal_uses = data.get("medicinal_uses", "").strip()
     ecological_role = data.get("ecological_role", "").strip()
-    image_url = data.get("image_url", "").strip() or "https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?auto=format&fit=crop&w=600&q=80"
+    image_url = data.get("image_url", "").strip() or None
 
     if not common_name or not scientific_name or not location_in_campus:
         return jsonify({"status": "error", "message": "Common Name, Scientific Name, and Location in Campus are required."}), 400
@@ -167,7 +167,20 @@ def delete_plant(plant_id):
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 500
 
+@app.route("/api/plants/<int:plant_id>/images", methods=["GET"])
+def get_plant_images(plant_id):
+    """Fetch all gallery images for a specific plant."""
+    db = get_db()
+    sql = "SELECT * FROM plant_images WHERE plant_id = %s ORDER BY is_primary DESC, id ASC"
+    try:
+        images = db.execute_query(sql, (plant_id,))
+        return jsonify({"status": "success", "images": images})
+    except Exception as e:
+        # If plant_images table doesn't exist yet, return empty
+        return jsonify({"status": "success", "images": []})
+
 if __name__ == "__main__":
     print("Starting PUPQC Campus Plant Database Server...")
-    print("Access application at: http://127.0.0.1:5000")
-    app.run(debug=True, port=5000)
+    print("Access locally at: http://127.0.0.1:5000")
+    print("Access from phone on same Wi-Fi at: http://192.168.100.110:5000")
+    app.run(debug=True, host="0.0.0.0", port=5000)

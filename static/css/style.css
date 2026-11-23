@@ -203,7 +203,7 @@ body {
    Main Content Intro Section
    ---------------------------------------------------------- */
 .section-intro {
-    padding: 60px 0 30px 0;
+    padding: 60px 0 40px 0;
 }
 
 .section-intro-title {
@@ -211,13 +211,41 @@ body {
     font-size: 2.2rem;
     color: var(--pup-maroon);
     font-weight: 700;
-    margin-bottom: 20px;
+    margin-bottom: 18px;
 }
 
 .section-intro-text {
     font-size: 1.05rem;
-    line-height: 1.8;
+    line-height: 1.85;
     color: #444444;
+}
+
+.intro-divider {
+    width: 70px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--pup-maroon), var(--pup-gold));
+    border-radius: 4px;
+    margin: 24px auto 16px auto;
+}
+
+.intro-stat-pill {
+    background: #fff7f7;
+    border: 1.5px solid #f0c0c0;
+    color: var(--pup-maroon);
+    border-radius: 30px;
+    padding: 8px 20px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    display: inline-flex;
+    align-items: center;
+    transition: background 0.2s, border-color 0.2s;
+}
+
+.intro-stat-pill:hover {
+    background: var(--pup-maroon);
+    color: #fff;
+    border-color: var(--pup-maroon);
 }
 
 /* ----------------------------------------------------------
@@ -454,25 +482,301 @@ body {
     text-transform: UPPERCASE;
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
+/* ----------------------------------------------------------
+   Shared Content Sections (Map, Research, Resources)
+   ---------------------------------------------------------- */
+.content-section {
+    padding: 70px 0;
+}
+
+.content-section-title {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    color: var(--pup-maroon);
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+/* Map Section */
+.map-embed-wrapper {
+    border: 2px solid #e9ecef;
+}
+
+.location-zone-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: #fff;
+    border: 1px solid #f0d0d0;
+    border-left: 4px solid var(--pup-maroon);
+    border-radius: 8px;
+    padding: 14px 16px;
+    transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.location-zone-card:hover {
+    box-shadow: 0 4px 14px rgba(128,0,0,0.1);
+    transform: translateX(4px);
+}
+
+.location-zone-icon {
+    width: 38px;
+    height: 38px;
+    background: #fff0f0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--pup-maroon);
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+
+/* Research Section */
+.research-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 28px 24px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.06);
+    border-top: 4px solid var(--pup-maroon);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.research-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 28px rgba(128,0,0,0.12);
+}
+
+.research-card-icon {
+    width: 52px;
+    height: 52px;
+    background: linear-gradient(135deg, var(--pup-maroon), #b30000);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 1.3rem;
+}
+
+.research-team-banner {
+    background: linear-gradient(135deg, var(--pup-maroon) 0%, var(--pup-dark-maroon) 100%);
+    border-radius: 12px;
+    padding: 24px 30px;
+    border: 2px solid var(--pup-gold);
+}
+
+/* Resources Section */
+.resource-link-card {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: 1px solid #e9ecef;
+    border-radius: 12px;
+    padding: 24px 20px;
+    text-decoration: none;
+    color: var(--pup-text-dark);
+    height: 100%;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    gap: 10px;
+}
+
+.resource-link-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(128,0,0,0.12);
+    border-color: var(--pup-maroon);
+    color: var(--pup-text-dark);
+    text-decoration: none;
+}
+
+.resource-icon {
+    width: 46px;
+    height: 46px;
+    background: #fff0f0;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--pup-maroon);
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.resource-visit-badge {
+    display: inline-block;
+    margin-top: auto;
+    padding-top: 6px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--pup-maroon);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* ----------------------------------------------------------
+   Responsive & Adaptive Screen Adjustments (Laptop, Tablet, Phone)
+   ---------------------------------------------------------- */
+
+/* Tablets & Medium Screens (<= 992px) */
+@media (max-width: 992px) {
+    .pup-top-header {
+        padding: 10px 20px;
+    }
     .pup-top-header .brand-title {
-        font-size: 1rem;
+        font-size: 1.15rem;
+        letter-spacing: 1px;
+    }
+    .hero-wrapper {
+        min-height: 350px;
+        height: 45vh;
     }
     .hero-content h1 {
-        font-size: 2.3rem;
+        font-size: 2.8rem;
     }
     .hero-content p {
-        font-size: 1rem;
+        font-size: 1.15rem;
+    }
+    .section-intro-title {
+        font-size: 1.9rem;
+    }
+}
+
+/* Mobile Devices & Small Tablets (<= 768px) */
+@media (max-width: 768px) {
+    .pup-top-header .brand-title {
+        font-size: 0.95rem;
+        letter-spacing: 0.5px;
+    }
+    .hero-wrapper {
+        min-height: 300px;
+        height: auto;
+        padding: 40px 0;
+    }
+    .hero-overlay {
+        padding: 0 5%;
+        text-align: center;
+        justify-content: center;
+    }
+    .hero-content h1 {
+        font-size: 2.2rem;
+    }
+    .hero-content p {
+        font-size: 1.05rem;
+    }
+    .sub-navbar-container {
+        margin-top: 0;
     }
     .sub-nav-brand {
         width: 100%;
         text-align: center;
         border-right: none;
         border-bottom: 1px solid var(--pup-gold);
+        padding: 12px 16px;
+        font-size: 1.1rem;
     }
     .sub-nav-links {
         width: 100%;
         justify-content: center;
+        flex-wrap: wrap;
+    }
+    .sub-nav-links li a {
+        padding: 12px 14px;
+        font-size: 0.75rem;
+    }
+    .catalog-section {
+        padding: 35px 0;
+    }
+    .search-filter-card {
+        padding: 18px;
+    }
+    .plant-card-img-wrapper {
+        height: 200px;
+    }
+}
+
+/* Mobile Phones (<= 576px) */
+@media (max-width: 576px) {
+    .pup-top-header {
+        padding: 8px 12px;
+    }
+    .pup-top-header .brand-title {
+        font-size: 0.78rem;
+        letter-spacing: 0.5px;
+        line-height: 1.25;
+        font-weight: 600;
+    }
+    .pup-top-header .header-icon-btn {
+        font-size: 1.1rem;
+        padding: 4px;
+    }
+    .hero-wrapper {
+        min-height: 240px;
+        padding: 35px 0;
+    }
+    .hero-content h1 {
+        font-size: 1.75rem;
+        margin-bottom: 4px;
+    }
+    .hero-content p {
+        font-size: 0.9rem;
+    }
+    .sub-nav-links {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        justify-content: flex-start;
+        padding: 4px 8px;
+    }
+    .sub-nav-links::-webkit-scrollbar {
+        display: none;
+    }
+    .sub-nav-links li {
+        flex: 0 0 auto;
+    }
+    .sub-nav-links li a {
+        padding: 10px 12px;
+        font-size: 0.72rem;
+        white-space: nowrap;
+    }
+    .section-intro {
+        padding: 30px 0 15px 0;
+    }
+    .section-intro-title {
+        font-size: 1.5rem;
+    }
+    .section-intro-text {
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+    .search-filter-card {
+        padding: 14px;
+        margin-bottom: 25px;
+    }
+    .plant-common-name {
+        font-size: 1.2rem;
+    }
+    .plant-card-body {
+        padding: 16px;
+    }
+    .plant-card-footer {
+        padding: 0 16px 16px 16px;
+    }
+    .cookie-notice-banner {
+        padding: 12px 16px;
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+        gap: 10px;
+    }
+    .cookie-notice-banner .d-flex {
+        width: 100%;
+    }
+    .cookie-btn-accept, .cookie-btn-decline {
+        flex: 1;
+        padding: 8px 10px;
+    }
+    .pup-footer {
+        padding: 25px 15px 85px 15px;
     }
 }

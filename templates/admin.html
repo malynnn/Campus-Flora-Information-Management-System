@@ -25,7 +25,12 @@
                 <h2 class="fw-bold text-danger mb-1" style="font-family: var(--font-heading);">Database Management</h2>
                 <p class="text-muted small">Manage, edit, or remove plant inventory entries for PUPQC.</p>
             </div>
-            <a href="/" class="btn btn-pup"><i class="fas fa-eye me-1"></i> View Main Directory</a>
+            <div class="d-flex gap-2">
+                <button class="btn btn-pup" data-bs-toggle="modal" data-bs-target="#addPlantModal">
+                    <i class="fas fa-plus me-1"></i> Add New Plant
+                </button>
+                <a href="/" class="btn btn-outline-secondary"><i class="fas fa-eye me-1"></i> View Main Directory</a>
+            </div>
         </div>
 
         <!-- Plants Table Card -->
@@ -55,6 +60,163 @@
                         </tbody>
                     </table>
                 </div>
+        </div>
+    </div>
+
+    <footer class="pup-footer mt-5">
+        <div class="container text-center">
+            <p class="small text-white-50 mb-1">Developed by Romalyn C. Amante, Brenan M. Collado, and Kristel B. Quisado</p>
+            <p class="small text-white-50 mb-0">&copy; 2026 PlantBase PUPQC. All Rights Reserved</p>
+        </div>
+    </footer>
+
+    <!-- ===================== ADD PLANT MODAL ===================== -->
+    <div class="modal fade" id="addPlantModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header modal-header-pup">
+                    <h5 class="modal-title fw-bold">
+                        <i class="fas fa-plus-circle me-2 text-warning"></i>Add New Plant to PUPQC Database
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <form id="addPlantForm">
+                    <div class="modal-body p-4">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small">Common Name <span class="text-danger">*</span></label>
+                                <input type="text" name="common_name" class="form-control" required placeholder="e.g. Narra">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small">Scientific Name <span class="text-danger">*</span></label>
+                                <input type="text" name="scientific_name" class="form-control" required placeholder="e.g. Pterocarpus indicus">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small">Local / Tagalog Name</label>
+                                <input type="text" name="local_name" class="form-control" placeholder="e.g. Narra">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small">Family Name</label>
+                                <input type="text" name="family" class="form-control" placeholder="e.g. Fabaceae">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small">Category</label>
+                                <select name="category_id" id="addCategorySelect" class="form-select">
+                                    <option value="">Select Category</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small">Conservation Status</label>
+                                <select name="conservation_status" class="form-select">
+                                    <option value="Least Concern">Least Concern</option>
+                                    <option value="Vulnerable">Vulnerable</option>
+                                    <option value="Endangered">Endangered</option>
+                                    <option value="Critically Endangered">Critically Endangered</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-semibold small">Campus Location in PUPQC <span class="text-danger">*</span></label>
+                                <input type="text" name="location_in_campus" class="form-control" required placeholder="e.g. Main Quadrangle & East Lawn">
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-semibold small">Image URL</label>
+                                <input type="url" name="image_url" class="form-control" placeholder="https://example.com/plant.jpg">
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-semibold small">Description</label>
+                                <textarea name="description" class="form-control" rows="2" placeholder="Botanical description..."></textarea>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small">Medicinal Uses</label>
+                                <textarea name="medicinal_uses" class="form-control" rows="2" placeholder="Herbal or traditional uses..."></textarea>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small">Ecological Role</label>
+                                <textarea name="ecological_role" class="form-control" rows="2" placeholder="Shade, habitat, soil nitrogen..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer bg-light">
+                        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-pup btn-sm"><i class="fas fa-save me-1"></i> Save Plant Entry</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================== EDIT PLANT MODAL ===================== -->
+    <div class="modal fade" id="editPlantModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header modal-header-pup">
+                    <h5 class="modal-title fw-bold">
+                        <i class="fas fa-edit me-2 text-warning"></i>Edit Plant Record
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <form id="editPlantForm">
+                    <input type="hidden" id="editPlantId" name="id">
+                    <div class="modal-body p-4">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small">Common Name <span class="text-danger">*</span></label>
+                                <input type="text" id="editCommonName" name="common_name" class="form-control" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small">Scientific Name <span class="text-danger">*</span></label>
+                                <input type="text" id="editScientificName" name="scientific_name" class="form-control" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small">Local / Tagalog Name</label>
+                                <input type="text" id="editLocalName" name="local_name" class="form-control">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small">Family Name</label>
+                                <input type="text" id="editFamily" name="family" class="form-control">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small">Category</label>
+                                <select id="editCategorySelect" name="category_id" class="form-select">
+                                    <option value="">Select Category</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small">Conservation Status</label>
+                                <select id="editConservation" name="conservation_status" class="form-select">
+                                    <option value="Least Concern">Least Concern</option>
+                                    <option value="Vulnerable">Vulnerable</option>
+                                    <option value="Endangered">Endangered</option>
+                                    <option value="Critically Endangered">Critically Endangered</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-semibold small">Campus Location in PUPQC <span class="text-danger">*</span></label>
+                                <input type="text" id="editLocation" name="location_in_campus" class="form-control" required>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-semibold small">Image URL</label>
+                                <input type="url" id="editImageUrl" name="image_url" class="form-control">
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-semibold small">Description</label>
+                                <textarea id="editDescription" name="description" class="form-control" rows="2"></textarea>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small">Medicinal Uses</label>
+                                <textarea id="editMedicinal" name="medicinal_uses" class="form-control" rows="2"></textarea>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small">Ecological Role</label>
+                                <textarea id="editEcological" name="ecological_role" class="form-control" rows="2"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer bg-light">
+                        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-pup btn-sm"><i class="fas fa-save me-1"></i> Save Changes</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -62,53 +224,137 @@
     <!-- Bootstrap JS & Admin logic -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", fetchAdminPlants);
+        document.addEventListener("DOMContentLoaded", () => {
+            fetchAdminPlants();
+            fetchCategories();
+        });
 
+        // ── Fetch categories for dropdowns ──────────────────────────────
+        async function fetchCategories() {
+            try {
+                const res = await fetch("/api/categories");
+                const data = await res.json();
+                if (data.status === "success") {
+                    ["addCategorySelect", "editCategorySelect"].forEach(id => {
+                        const el = document.getElementById(id);
+                        if (!el) return;
+                        el.innerHTML = '<option value="">Select Category</option>';
+                        data.categories.forEach(c => {
+                            const opt = document.createElement("option");
+                            opt.value = c.id;
+                            opt.textContent = c.name;
+                            el.appendChild(opt);
+                        });
+                    });
+                }
+            } catch (err) { console.error("Category fetch error:", err); }
+        }
+
+        // ── Fetch and render plant table ────────────────────────────────
         async function fetchAdminPlants() {
             try {
                 const res = await fetch("/api/plants");
                 const data = await res.json();
-                if (data.status === "success") {
-                    renderAdminTable(data.plants);
-                }
-            } catch (err) {
-                console.error("Admin fetch error:", err);
-            }
+                if (data.status === "success") renderAdminTable(data.plants);
+            } catch (err) { console.error("Admin fetch error:", err); }
         }
 
         function renderAdminTable(plants) {
             const tbody = document.getElementById("adminTableBody");
             document.getElementById("adminRecordCount").textContent = `${plants.length} Total Records`;
-
             if (plants.length === 0) {
                 tbody.innerHTML = `<tr><td colspan="7" class="text-center py-4 text-muted">No records found in database.</td></tr>`;
                 return;
             }
-
-            let html = "";
-            plants.forEach((p, idx) => {
-                html += `
-                    <tr>
-                        <td>${p.id}</td>
-                        <td class="fw-bold text-danger">${escapeHtml(p.common_name)}</td>
-                        <td class="fst-italic">${escapeHtml(p.scientific_name)}</td>
-                        <td>${escapeHtml(p.family || '-')}</td>
-                        <td><small>${escapeHtml(p.location_in_campus)}</small></td>
-                        <td><span class="badge ${p.conservation_status === 'Vulnerable' ? 'bg-warning text-dark' : 'bg-success'}">${escapeHtml(p.conservation_status)}</span></td>
-                        <td class="text-center">
-                            <button class="btn btn-sm btn-outline-danger" onclick="deletePlant(${p.id})">
-                                <i class="fas fa-trash"></i> Delete
-                            </button>
-                        </td>
-                    </tr>
-                `;
-            });
-            tbody.innerHTML = html;
+            tbody.innerHTML = plants.map(p => `
+                <tr>
+                    <td>${p.id}</td>
+                    <td class="fw-bold text-danger">${escapeHtml(p.common_name)}</td>
+                    <td class="fst-italic">${escapeHtml(p.scientific_name)}</td>
+                    <td>${escapeHtml(p.family || '-')}</td>
+                    <td><small>${escapeHtml(p.location_in_campus)}</small></td>
+                    <td><span class="badge ${p.conservation_status === 'Vulnerable' ? 'bg-warning text-dark' : p.conservation_status === 'Endangered' ? 'bg-orange' : p.conservation_status === 'Critically Endangered' ? 'bg-danger' : 'bg-success'}">${escapeHtml(p.conservation_status)}</span></td>
+                    <td class="text-center">
+                        <button class="btn btn-sm btn-outline-primary me-1" onclick='openEditModal(${JSON.stringify(p)})'>
+                            <i class="fas fa-edit"></i> Edit
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger" onclick="deletePlant(${p.id})">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
         }
 
+        // ── Add Plant ───────────────────────────────────────────────────
+        document.getElementById("addPlantForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const form = e.target;
+            const payload = Object.fromEntries(new FormData(form));
+            try {
+                const res = await fetch("/api/plants", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                });
+                const data = await res.json();
+                if (res.ok && data.status === "success") {
+                    alert("Plant added successfully!");
+                    form.reset();
+                    bootstrap.Modal.getInstance(document.getElementById("addPlantModal")).hide();
+                    fetchAdminPlants();
+                } else {
+                    alert("Error: " + (data.message || "Failed to add plant."));
+                }
+            } catch (err) { alert("Server error while adding plant."); }
+        });
+
+        // ── Edit Plant ──────────────────────────────────────────────────
+        function openEditModal(plant) {
+            document.getElementById("editPlantId").value      = plant.id;
+            document.getElementById("editCommonName").value   = plant.common_name || '';
+            document.getElementById("editScientificName").value = plant.scientific_name || '';
+            document.getElementById("editLocalName").value    = plant.local_name || '';
+            document.getElementById("editFamily").value       = plant.family || '';
+            document.getElementById("editLocation").value     = plant.location_in_campus || '';
+            document.getElementById("editDescription").value  = plant.description || '';
+            document.getElementById("editMedicinal").value    = plant.medicinal_uses || '';
+            document.getElementById("editEcological").value   = plant.ecological_role || '';
+            document.getElementById("editImageUrl").value     = plant.image_url || '';
+            document.getElementById("editConservation").value = plant.conservation_status || 'Least Concern';
+            // Set category after fetch populates the dropdown
+            setTimeout(() => {
+                const sel = document.getElementById("editCategorySelect");
+                if (sel) sel.value = plant.category_id || '';
+            }, 300);
+            new bootstrap.Modal(document.getElementById("editPlantModal")).show();
+        }
+
+        document.getElementById("editPlantForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const form = e.target;
+            const id = document.getElementById("editPlantId").value;
+            const payload = Object.fromEntries(new FormData(form));
+            try {
+                const res = await fetch(`/api/plants/${id}`, {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                });
+                const data = await res.json();
+                if (res.ok && data.status === "success") {
+                    alert("Plant updated successfully!");
+                    bootstrap.Modal.getInstance(document.getElementById("editPlantModal")).hide();
+                    fetchAdminPlants();
+                } else {
+                    alert("Error: " + (data.message || "Failed to update plant."));
+                }
+            } catch (err) { alert("Server error while updating plant."); }
+        });
+
+        // ── Delete Plant ────────────────────────────────────────────────
         async function deletePlant(id) {
             if (!confirm(`Are you sure you want to delete plant record #${id}?`)) return;
-
             try {
                 const res = await fetch(`/api/plants/${id}`, { method: "DELETE" });
                 const data = await res.json();
@@ -118,14 +364,12 @@
                 } else {
                     alert("Delete failed: " + data.message);
                 }
-            } catch (err) {
-                alert("Server error when deleting plant.");
-            }
+            } catch (err) { alert("Server error when deleting plant."); }
         }
 
         function escapeHtml(str) {
             if (!str) return '';
-            return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+            return String(str).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
         }
     </script>
 </body>

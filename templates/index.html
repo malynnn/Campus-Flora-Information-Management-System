@@ -44,7 +44,6 @@
             <div class="hero-content">
                 <h1>Campus Flora</h1>
                 <p class="fs-4 text-warning fw-semibold mb-1">Information Management System</p>
-                <p class="small text-light opacity-75">PUPQC Campus Biodiversity & Botanical Database</p>
             </div>
         </div>
     </div>
@@ -66,8 +65,8 @@
                         <li><a href="#research">RESEARCH</a></li>
                         <li><a href="#resources">RESOURCES</a></li>
                         <li>
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#addPlantModal" class="text-warning">
-                                <i class="fas fa-plus-circle me-1"></i>ADD PLANT
+                            <a href="/admin" class="text-warning">
+                                <i class="fas fa-cog me-1"></i>ADMIN
                             </a>
                         </li>
                     </ul>
@@ -81,24 +80,28 @@
          ========================================================== -->
     <main>
         <section id="about" class="section-intro container">
-            <div class="row align-items-center">
-                <div class="col-lg-8">
+            <div class="row justify-content-center">
+                <div class="col-lg-10 col-12 text-center">
                     <h2 class="section-intro-title">Campus Flora Information Management System</h2>
-                    <p class="section-intro-text">
+                    <p class="section-intro-text mx-auto" style="max-width:820px;">
                         The University is dedicated to ensuring the conservation, restoration, and sustainable use of the campus ecosystem. By highlighting the need for increased awareness and appreciation of urban biodiversity, efforts to research campus flora and fauna enables the formation of measures to protect local species, promote environmental stewardship, and serve as a living botanical database for the PUPQC community.
                     </p>
-                </div>
-                <div class="col-lg-4 text-end d-none d-lg-block">
-                    <div class="p-4 bg-light rounded-3 border-start border-4 border-danger shadow-sm text-start">
-                        <h6 class="fw-bold text-danger text-uppercase mb-2">
-                            <i class="fas fa-database me-2"></i>Database Engine
-                        </h6>
-                        <p class="small text-muted mb-2">Connected Engine:</p>
-                        <span id="dbStatusBadge" class="badge bg-secondary mb-3">Checking...</span>
-                        <div class="d-grid">
-                            <a href="/admin" class="btn btn-sm btn-pup">
-                                <i class="fas fa-cog me-1"></i> Open Admin Portal
-                            </a>
+                    <div class="intro-divider"></div>
+                    <div class="row justify-content-center g-3 mt-2">
+                        <div class="col-auto">
+                            <div class="intro-stat-pill">
+                                <i class="fas fa-leaf me-2"></i>Native &amp; Endemic Species
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="intro-stat-pill">
+                                <i class="fas fa-map-marker-alt me-2"></i>PUPQC Campus Grounds
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="intro-stat-pill">
+                                <i class="fas fa-flask me-2"></i>Botanical Research Database
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -117,10 +120,6 @@
                         </h3>
                         <p class="text-muted small mb-0" id="plantCount">Loading campus flora inventory...</p>
                     </div>
-
-                    <button class="btn btn-pup" data-bs-toggle="modal" data-bs-target="#addPlantModal">
-                        <i class="fas fa-plus me-1"></i> Add New Plant Entry
-                    </button>
                 </div>
 
                 <!-- Search & Category Filters -->
@@ -148,6 +147,289 @@
                 </div>
             </div>
         </section>
+
+        <!-- ==========================================================
+             MAP & LOCATIONS SECTION
+             ========================================================== -->
+        <section id="mapSection" class="content-section bg-white">
+            <div class="container">
+                <div class="section-header text-center mb-5">
+                    <h2 class="content-section-title">
+                        <i class="fas fa-map-marked-alt me-3 text-danger"></i>Map &amp; Locations
+                    </h2>
+                    <p class="text-muted">Explore where campus flora species are located within the PUPQC grounds.</p>
+                    <div class="intro-divider"></div>
+                </div>
+
+                <div class="row g-4 mb-5">
+                    <div class="col-lg-8">
+                        <!-- Embedded PUPQC Map -->
+                        <div class="map-embed-wrapper shadow-sm rounded overflow-hidden">
+                            <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3860.7093459987556!2d121.0442!3d14.6505!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397b77b8c000001%3A0x8b2a4a9f6e1b1234!2sPolytechnic%20University%20of%20the%20Philippines%20-%20Quezon%20City!5e0!3m2!1sen!2sph!4v1700000000000!5m2!1sen!2sph"
+                                width="100%" height="380" style="border:0;" allowfullscreen="" loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade" title="PUPQC Campus Map">
+                            </iframe>
+                        </div>
+                        <p class="small text-muted mt-2 text-center">
+                            <i class="fas fa-info-circle me-1"></i>
+                            Polytechnic University of the Philippines — Quezon City Campus
+                        </p>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <h5 class="fw-bold text-danger mb-3">
+                            <i class="fas fa-tree me-2"></i>Campus Zones
+                        </h5>
+                        <div class="d-flex flex-column gap-3">
+                            <div class="location-zone-card">
+                                <div class="location-zone-icon"><i class="fas fa-building"></i></div>
+                                <div>
+                                    <div class="fw-semibold small">Buildings &amp; Grounds</div>
+                                    <div class="text-muted" style="font-size:0.78rem;">Administrative areas, walkways, and building perimeters</div>
+                                </div>
+                            </div>
+                            <div class="location-zone-card">
+                                <div class="location-zone-icon"><i class="fas fa-seedling"></i></div>
+                                <div>
+                                    <div class="fw-semibold small">Open Green Areas</div>
+                                    <div class="text-muted" style="font-size:0.78rem;">Lawns, open fields, and campus perimeter zones</div>
+                                </div>
+                            </div>
+                            <div class="location-zone-card">
+                                <div class="location-zone-icon"><i class="fas fa-road"></i></div>
+                                <div>
+                                    <div class="fw-semibold small">Roads &amp; Pathways</div>
+                                    <div class="text-muted" style="font-size:0.78rem;">Street trees, shade trees along campus roads</div>
+                                </div>
+                            </div>
+                            <div class="location-zone-card">
+                                <div class="location-zone-icon"><i class="fas fa-water"></i></div>
+                                <div>
+                                    <div class="fw-semibold small">Riparian &amp; Drainage Areas</div>
+                                    <div class="text-muted" style="font-size:0.78rem;">Vegetation along drainage canals and waterways</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================================
+             RESEARCH SECTION
+             ========================================================== -->
+        <section id="research" class="content-section" style="background:#f8f9fa; border-top:1px solid #e9ecef;">
+            <div class="container">
+                <div class="section-header text-center mb-5">
+                    <h2 class="content-section-title">
+                        <i class="fas fa-microscope me-3 text-danger"></i>Research
+                    </h2>
+                    <p class="text-muted">Scientific documentation and botanical survey of plant species within the <strong>Polytechnic University of the Philippines — Quezon City (PUPQC)</strong> campus grounds.</p>
+                    <div class="intro-divider"></div>
+                </div>
+
+                <div class="row g-4 mb-5">
+                    <div class="col-md-4">
+                        <div class="research-card h-100">
+                            <div class="research-card-icon">
+                                <i class="fas fa-bullseye"></i>
+                            </div>
+                            <h5 class="fw-bold mt-3 mb-2">Objectives</h5>
+                            <ul class="small text-muted ps-3 mb-0">
+                                <li>Document and catalog all plant species found within the PUPQC campus grounds.</li>
+                                <li>Identify native, endemic, and introduced plant species.</li>
+                                <li>Assess the ecological roles and medicinal significance of campus flora.</li>
+                                <li>Create a living digital botanical database accessible to the PUPQC community.</li>
+                                <li>Support biodiversity conservation and environmental stewardship programs.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="research-card h-100">
+                            <div class="research-card-icon">
+                                <i class="fas fa-clipboard-list"></i>
+                            </div>
+                            <h5 class="fw-bold mt-3 mb-2">Methodology</h5>
+                            <ul class="small text-muted ps-3 mb-0">
+                                <li><strong>Field Survey:</strong> Systematic campus-wide transect walks and plot-based sampling within PUPQC grounds.</li>
+                                <li><strong>Species Identification:</strong> Morphological characterization using botanical keys and <strong>PUP Herbarium</strong> references.</li>
+                                <li><strong>Expert Verification:</strong> All identified species were verified by the <strong>Plant Biology Students of the Department of Biology, PUP Sta. Mesa</strong> in collaboration with the <strong>PUP Herbarium</strong>.</li>
+                                <li><strong>Photography:</strong> High-resolution documentation of leaves, bark, flowers, and fruits.</li>
+                                <li><strong>GIS Mapping:</strong> GPS-tagged location recording for each documented specimen.</li>
+                                <li><strong>Database Entry:</strong> Structured data encoding into the PUPQC Flora Information System.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="research-card h-100">
+                            <div class="research-card-icon">
+                                <i class="fas fa-chart-bar"></i>
+                            </div>
+                            <h5 class="fw-bold mt-3 mb-2">Survey Findings</h5>
+                            <div class="small text-muted">
+                                <div class="d-flex justify-content-between border-bottom py-2">
+                                    <span>Total Species Documented</span>
+                                    <span class="fw-bold text-danger" id="researchPlantCount">—</span>
+                                </div>
+                                <div class="d-flex justify-content-between border-bottom py-2">
+                                    <span>Survey Area</span>
+                                    <span class="fw-bold text-danger">PUPQC Campus Only</span>
+                                </div>
+                                <div class="d-flex justify-content-between border-bottom py-2">
+                                    <span>Plant Habit</span>
+                                    <span class="fw-bold text-danger">Trees, Shrubs</span>
+                                </div>
+                                <div class="d-flex justify-content-between border-bottom py-2">
+                                    <span>Conservation Status</span>
+                                    <span class="fw-bold text-danger">Least Concern</span>
+                                </div>
+                                <div class="d-flex justify-content-between border-bottom py-2">
+                                    <span>Survey Year</span>
+                                    <span class="fw-bold text-danger">2026</span>
+                                </div>
+                                <div class="d-flex justify-content-between py-2">
+                                    <span>Expert Verifier</span>
+                                    <span class="fw-bold text-danger text-end" style="max-width:60%; font-size:0.78rem;">PUP Herbarium &amp; Dept. of Biology, PUP Sta. Mesa</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Research Team -->
+                <div class="row justify-content-center">
+                    <div class="col-lg-10">
+                        <div class="research-team-banner">
+                            <div class="row align-items-center">
+                                <div class="col-auto">
+                                    <i class="fas fa-users" style="font-size:2.5rem; color:var(--pup-gold);"></i>
+                                </div>
+                                <div class="col">
+                                    <div class="fw-bold text-white mb-1">Research Team — PUPQC Campus Flora Project</div>
+                                    <div class="text-white-50 small">
+                                        Romalyn C. Amante &nbsp;·&nbsp; Brenan M. Collado &nbsp;·&nbsp; Kristel B. Quisado
+                                    </div>
+                                </div>
+                                <div class="col-auto text-end">
+                                    <span class="badge bg-warning text-dark fw-semibold px-3 py-2">BS Information Technology</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Acknowledgment Banner -->
+                        <div class="mt-4 p-4 rounded" style="background: #fff; border: 1px solid #dee2e6; border-left: 5px solid var(--pup-maroon);">
+                            <div class="row align-items-start g-3">
+                                <div class="col-auto">
+                                    <i class="fas fa-award" style="font-size:2rem; color:var(--pup-maroon);"></i>
+                                </div>
+                                <div class="col">
+                                    <div class="fw-bold text-dark mb-1">
+                                        <i class="fas fa-handshake me-2 text-danger"></i>Acknowledgment & Expert Verification
+                                    </div>
+                                    <p class="small text-muted mb-2">
+                                        The plant species documented in this research are exclusively found within the 
+                                        <strong>PUPQC (Polytechnic University of the Philippines — Quezon City)</strong> campus grounds. 
+                                        All plant identifications and botanical data were verified with the support of:
+                                    </p>
+                                    <div class="d-flex flex-wrap gap-3">
+                                        <span class="badge px-3 py-2 fw-semibold" style="background:#8B0000; color:#fff; font-size:0.82rem;">
+                                            <i class="fas fa-leaf me-1"></i>PUP Herbarium
+                                        </span>
+                                        <span class="badge px-3 py-2 fw-semibold" style="background:#8B0000; color:#fff; font-size:0.82rem;">
+                                            <i class="fas fa-microscope me-1"></i>Plant Biology Students — Department of Biology, PUP Sta. Mesa
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================================
+             RESOURCES SECTION
+             ========================================================== -->
+        <section id="resources" class="content-section bg-white">
+            <div class="container">
+                <div class="section-header text-center mb-5">
+                    <h2 class="content-section-title">
+                        <i class="fas fa-book-open me-3 text-danger"></i>Resources
+                    </h2>
+                    <p class="text-muted">References, tools, and external resources for campus flora research.</p>
+                    <div class="intro-divider"></div>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-md-6 col-lg-3">
+                        <a href="https://www.stuartxchange.org" target="_blank" class="resource-link-card">
+                            <div class="resource-icon"><i class="fas fa-leaf"></i></div>
+                            <h6 class="fw-bold mb-1">Philippine Medicinal Plants</h6>
+                            <p class="small text-muted mb-0">Stuart Xchange — comprehensive database of Philippine herbal and medicinal plants.</p>
+                            <span class="resource-visit-badge">Visit Site <i class="fas fa-external-link-alt ms-1"></i></span>
+                        </a>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <a href="https://www.gbif.org" target="_blank" class="resource-link-card">
+                            <div class="resource-icon"><i class="fas fa-globe-asia"></i></div>
+                            <h6 class="fw-bold mb-1">GBIF — Global Biodiversity</h6>
+                            <p class="small text-muted mb-0">Global Biodiversity Information Facility — open access to biodiversity data worldwide.</p>
+                            <span class="resource-visit-badge">Visit Site <i class="fas fa-external-link-alt ms-1"></i></span>
+                        </a>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <a href="https://powo.science.kew.org" target="_blank" class="resource-link-card">
+                            <div class="resource-icon"><i class="fas fa-seedling"></i></div>
+                            <h6 class="fw-bold mb-1">Plants of the World Online</h6>
+                            <p class="small text-muted mb-0">Kew Gardens — authoritative plant taxonomy and species information resource.</p>
+                            <span class="resource-visit-badge">Visit Site <i class="fas fa-external-link-alt ms-1"></i></span>
+                        </a>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <a href="https://www.iucnredlist.org" target="_blank" class="resource-link-card">
+                            <div class="resource-icon"><i class="fas fa-shield-alt"></i></div>
+                            <h6 class="fw-bold mb-1">IUCN Red List</h6>
+                            <p class="small text-muted mb-0">International Union for Conservation of Nature — global conservation status of species.</p>
+                            <span class="resource-visit-badge">Visit Site <i class="fas fa-external-link-alt ms-1"></i></span>
+                        </a>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <a href="https://www.denr.gov.ph" target="_blank" class="resource-link-card">
+                            <div class="resource-icon"><i class="fas fa-mountain"></i></div>
+                            <h6 class="fw-bold mb-1">DENR Philippines</h6>
+                            <p class="small text-muted mb-0">Dept. of Environment &amp; Natural Resources — Philippine environmental policies and biodiversity.</p>
+                            <span class="resource-visit-badge">Visit Site <i class="fas fa-external-link-alt ms-1"></i></span>
+                        </a>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <a href="https://www.fao.org" target="_blank" class="resource-link-card">
+                            <div class="resource-icon"><i class="fas fa-tree"></i></div>
+                            <h6 class="fw-bold mb-1">FAO Forestry</h6>
+                            <p class="small text-muted mb-0">Food &amp; Agriculture Organization — global forestry, agroforestry, and tree species data.</p>
+                            <span class="resource-visit-badge">Visit Site <i class="fas fa-external-link-alt ms-1"></i></span>
+                        </a>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <a href="https://phytoimages.siu.edu" target="_blank" class="resource-link-card">
+                            <div class="resource-icon"><i class="fas fa-camera"></i></div>
+                            <h6 class="fw-bold mb-1">PhytoImages</h6>
+                            <p class="small text-muted mb-0">Scientific plant image database for botanical identification and reference photography.</p>
+                            <span class="resource-visit-badge">Visit Site <i class="fas fa-external-link-alt ms-1"></i></span>
+                        </a>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <a href="https://www.plantnet.org" target="_blank" class="resource-link-card">
+                            <div class="resource-icon"><i class="fas fa-mobile-alt"></i></div>
+                            <h6 class="fw-bold mb-1">PlantNet App</h6>
+                            <p class="small text-muted mb-0">AI-powered plant identification app used globally for field species identification.</p>
+                            <span class="resource-visit-badge">Visit Site <i class="fas fa-external-link-alt ms-1"></i></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
     <!-- ==========================================================
@@ -165,9 +447,20 @@
                 <div class="modal-body p-4">
                     <div class="row">
                         <div class="col-md-5 mb-3 mb-md-0">
-                            <div class="rounded overflow-hidden shadow-sm border">
-                                <img id="modalPlantImg" src="" alt="Plant image" class="img-fluid w-100" style="max-height: 320px; object-fit: cover;">
+                            <!-- Photo Gallery Carousel -->
+                            <div id="plantPhotoCarousel" class="carousel slide rounded overflow-hidden shadow-sm border" data-bs-ride="false">
+                                <div class="carousel-inner" id="carouselInner" style="max-height:300px;">
+                                    <!-- Injected by JS -->
+                                </div>
+                                <button class="carousel-control-prev" type="button" data-bs-target="#plantPhotoCarousel" data-bs-slide="prev" id="carouselPrevBtn" style="display:none;">
+                                    <span class="carousel-control-prev-icon"></span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#plantPhotoCarousel" data-bs-slide="next" id="carouselNextBtn" style="display:none;">
+                                    <span class="carousel-control-next-icon"></span>
+                                </button>
                             </div>
+                            <!-- Thumbnail Strip -->
+                            <div id="photoThumbnails" class="d-flex gap-2 mt-2 flex-wrap"></div>
                             <div class="mt-3 p-3 bg-light rounded text-center">
                                 <span class="small text-muted d-block mb-1">Conservation Status</span>
                                 <span id="modalConservation" class="badge bg-success px-3 py-2 fs-6">Least Concern</span>
@@ -213,82 +506,7 @@
         </div>
     </div>
 
-    <!-- ==========================================================
-         ADD NEW PLANT MODAL (Admin Data Entry)
-         ========================================================== -->
-    <div class="modal fade" id="addPlantModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header modal-header-pup">
-                    <h5 class="modal-title fw-bold">
-                        <i class="fas fa-plus-circle me-2 text-warning"></i>Add New Plant to PUPQC Database
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form id="addPlantForm">
-                    <div class="modal-body p-4">
-                        <div class="row g-3">
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold small">Common Name <span class="text-danger">*</span></label>
-                                <input type="text" name="common_name" class="form-control" required placeholder="e.g. Narra">
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold small">Scientific Name <span class="text-danger">*</span></label>
-                                <input type="text" name="scientific_name" class="form-control" required placeholder="e.g. Pterocarpus indicus">
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold small">Local Name / Tagalog Name</label>
-                                <input type="text" name="local_name" class="form-control" placeholder="e.g. Narra">
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold small">Family Name</label>
-                                <input type="text" name="family" class="form-control" placeholder="e.g. Fabaceae">
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold small">Category</label>
-                                <select name="category_id" id="plantCategorySelect" class="form-select">
-                                    <option value="">Select Category</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold small">Conservation Status</label>
-                                <select name="conservation_status" class="form-select">
-                                    <option value="Least Concern">Least Concern</option>
-                                    <option value="Vulnerable">Vulnerable</option>
-                                    <option value="Endangered">Endangered</option>
-                                    <option value="Critically Endangered">Critically Endangered</option>
-                                </select>
-                            </div>
-                            <div class="col-12">
-                                <label class="form-label fw-semibold small">Campus Location in PUPQC <span class="text-danger">*</span></label>
-                                <input type="text" name="location_in_campus" class="form-control" required placeholder="e.g. Main Quadrangle & East Lawn">
-                            </div>
-                            <div class="col-12">
-                                <label class="form-label fw-semibold small">Image URL</label>
-                                <input type="url" name="image_url" class="form-control" placeholder="https://example.com/plant.jpg">
-                            </div>
-                            <div class="col-12">
-                                <label class="form-label fw-semibold small">Description</label>
-                                <textarea name="description" class="form-control" rows="2" placeholder="Botanical description..."></textarea>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold small">Medicinal Uses</label>
-                                <textarea name="medicinal_uses" class="form-control" rows="2" placeholder="Herbal or traditional uses..."></textarea>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold small">Ecological Role</label>
-                                <textarea name="ecological_role" class="form-control" rows="2" placeholder="Shade, habitat, soil nitrogen..."></textarea>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer bg-light">
-                        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-pup btn-sm"><i class="fas fa-save me-1"></i> Save Plant Entry</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+    <!-- Add Plant Modal moved to Admin Portal (/admin) -->
 
     <!-- ==========================================================
          OFFCANVAS SIDEBAR NAV
@@ -302,7 +520,7 @@
             <ul class="list-group list-group-flush">
                 <li class="list-group-item"><a href="/" class="text-decoration-none text-dark fw-medium"><i class="fas fa-home me-2 text-danger"></i> Home</a></li>
                 <li class="list-group-item"><a href="#directorySection" data-bs-dismiss="offcanvas" class="text-decoration-none text-dark fw-medium"><i class="fas fa-leaf me-2 text-danger"></i> Plant Directory</a></li>
-                <li class="list-group-item"><a href="/admin" class="text-decoration-none text-dark fw-medium"><i class="fas fa-cogs me-2 text-danger"></i> Admin Management Portal</a></li>
+
             </ul>
         </div>
     </div>
@@ -312,8 +530,8 @@
          ========================================================== -->
     <footer class="pup-footer">
         <div class="container text-center">
-            <p class="mb-1 fw-bold">POLYTECHNIC UNIVERSITY OF THE PHILIPPINES QUEZON CITY</p>
-            <p class="small text-white-50 mb-0">Campus Flora Information Management System &copy; 2026</p>
+            <p class="small text-white-50 mb-1">Developed by Romalyn C. Amante, Brenan M. Collado, and Kristel B. Quisado</p>
+            <p class="small text-white-50 mb-0">&copy; 2026 PlantBase PUPQC. All Rights Reserved</p>
         </div>
     </footer>
 

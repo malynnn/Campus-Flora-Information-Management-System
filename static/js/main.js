@@ -128,6 +128,9 @@ async function fetchPlants() {
             if (countElement) {
                 countElement.textContent = `Displaying ${currentPlants.length} Flora Entries`;
             }
+            // Update research section count
+            const researchCount = document.getElementById("researchPlantCount");
+            if (researchCount) researchCount.textContent = currentPlants.length;
         } else {
             showError("Failed to load plants data.");
         }
@@ -190,17 +193,23 @@ function renderPlantGrid(plants) {
             : "badge-least-concern";
 
         const categoryName = plant.category_name || "Campus Flora";
-        const fallbackImg = "https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?auto=format&fit=crop&w=600&q=80";
-        const plantImg = plant.image_url || fallbackImg;
+
+        const imgSection = plant.image_url
+            ? `<img src="${plant.image_url}" 
+                     alt="${escapeHtml(plant.common_name)}" 
+                     class="plant-card-img"
+                     onerror="this.style.display='none';this.nextElementSibling&&(this.nextElementSibling.style.display='flex');">` 
+            : `<div class="plant-card-img d-flex flex-column align-items-center justify-content-center" 
+                     style="background:linear-gradient(135deg,#e8f5e9,#c8e6c9);height:220px;">
+                   <i class="fas fa-leaf" style="font-size:3rem;color:#4caf50;opacity:0.5;"></i>
+                   <small class="text-muted mt-2" style="font-size:0.75rem;">No Photo Available</small>
+               </div>`;
 
         html += `
             <div class="col-lg-4 col-md-6 mb-4">
                 <div class="plant-card">
                     <div class="plant-card-img-wrapper">
-                        <img src="${plantImg}" 
-                             alt="${escapeHtml(plant.common_name)}" 
-                             class="plant-card-img"
-                             onerror="this.onerror=null; this.src='${fallbackImg}';">
+                        ${imgSection}
                         <span class="badge-status ${statusBadgeClass}">
                             ${escapeHtml(plant.conservation_status || 'Least Concern')}
                         </span>
@@ -231,7 +240,7 @@ function renderPlantGrid(plants) {
 }
 
 /**
- * Open detail modal for a plant
+ * Open detail modal for a plant with photo gallery carousel
  */
 async function openPlantModal(plantId) {
     const plant = currentPlants.find(p => p.id === plantId);
@@ -248,17 +257,110 @@ async function openPlantModal(plantId) {
     document.getElementById("modalMedicinal").textContent = plant.medicinal_uses || "None specified.";
     document.getElementById("modalEcological").textContent = plant.ecological_role || "Provides campus greenery and urban microclimate moderation.";
 
-    const fallbackImg = "https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?auto=format&fit=crop&w=600&q=80";
-    const imgEl = document.getElementById("modalPlantImg");
-    if (imgEl) {
-        imgEl.src = plant.image_url || fallbackImg;
-        imgEl.onerror = () => { imgEl.src = fallbackImg; };
+    // Set conservation badge color
+    const conservationBadge = document.getElementById("modalConservation");
+    const statusColorMap = {
+        "Least Concern": "bg-success",
+        "Vulnerable": "bg-warning text-dark",
+        "Endangered": "bg-orange text-white",
+        "Critically Endangered": "bg-danger"
+    };
+    conservationBadge.className = "badge px-3 py-2 fs-6 " + (statusColorMap[plant.conservation_status] || "bg-success");
+
+    // Build carousel
+    const carouselInner = document.getElementById("carouselInner");
+    const thumbnails = document.getElementById("photoThumbnails");
+    const prevBtn = document.getElementById("carouselPrevBtn");
+    const nextBtn = document.getElementById("carouselNextBtn");
+
+    carouselInner.innerHTML = '<div class="carousel-item active"><div class="d-flex justify-content-center align-items-center" style="height:300px;background:#f0f0f0;"><div class="spinner-border text-danger"></div></div></div>';
+    thumbnails.innerHTML = "";
+
+    // Fetch gallery images
+    let images = [];
+    try {
+        const res = await fetch(`/api/plants/${plantId}/images`);
+        const data = await res.json();
+        if (data.status === "success" && data.images.length > 0) {
+            images = data.images;
+        }
+    } catch (e) {}
+
+    // If no gallery images and plant has an image_url, use it; else show no-photo placeholder
+    if (images.length === 0) {
+        if (plant.image_url) {
+            images = [{ image_url: plant.image_url, caption: plant.common_name, is_primary: 1 }];
+        }
+    }
+
+    // Build carousel slides or no-photo placeholder
+    if (images.length === 0) {
+        carouselInner.innerHTML = `
+            <div class="carousel-item active">
+                <div class="d-flex flex-column align-items-center justify-content-center"
+                     style="height:300px;background:linear-gradient(135deg,#e8f5e9,#c8e6c9);">
+                    <i class="fas fa-leaf" style="font-size:4rem;color:#4caf50;opacity:0.45;"></i>
+                    <p class="text-muted mt-3 mb-0" style="font-size:0.95rem;">No Photo Available</p>
+                    <small class="text-muted">${escapeHtml(plant.common_name)}</small>
+                </div>
+            </div>`;
+        prevBtn.style.display = "none";
+        nextBtn.style.display = "none";
+        thumbnails.innerHTML = "";
+    } else {
+        carouselInner.innerHTML = images.map((img, i) => `
+            <div class="carousel-item ${i === 0 ? 'active' : ''}">
+                <img src="${img.image_url}" 
+                     alt="${escapeHtml(img.caption || plant.common_name)}"
+                     class="d-block w-100"
+                     style="max-height:300px; object-fit:cover;"
+                     onerror="this.parentElement.innerHTML='<div class=\'d-flex flex-column align-items-center justify-content-center\' style=\'height:300px;background:linear-gradient(135deg,#e8f5e9,#c8e6c9);\'><i class=\'fas fa-leaf\' style=\'font-size:4rem;color:#4caf50;opacity:0.45;\'></i><p class=\'text-muted mt-3\'>No Photo Available</p></div>'">
+                ${images.length > 1 ? `<div class="carousel-caption d-none d-md-block" style="background:rgba(0,0,0,0.4);border-radius:6px;bottom:8px;padding:4px 10px;">
+                    <small>${escapeHtml(img.caption || '')}</small>
+                </div>` : ''}
+            </div>
+        `).join('');
+
+        if (images.length > 1) {
+            prevBtn.style.display = "";
+            nextBtn.style.display = "";
+            thumbnails.innerHTML = images.map((img, i) => `
+                <img src="${img.image_url}" 
+                     alt="Photo ${i+1}"
+                     class="rounded border ${i === 0 ? 'border-danger border-2' : 'border-secondary'}"
+                     style="width:56px;height:56px;object-fit:cover;cursor:pointer;transition:opacity 0.2s;"
+                     onclick="goToSlide(${i}, this)">
+            `).join('');
+        } else {
+            prevBtn.style.display = "none";
+            nextBtn.style.display = "none";
+            thumbnails.innerHTML = "";
+        }
     }
 
     if (!plantModal) {
         plantModal = new bootstrap.Modal(document.getElementById("plantDetailModal"));
     }
     plantModal.show();
+}
+
+/**
+ * Navigate carousel to a specific slide and highlight the clicked thumbnail
+ */
+function goToSlide(index, thumbEl) {
+    const carousel = bootstrap.Carousel.getOrCreateInstance(document.getElementById("plantPhotoCarousel"));
+    carousel.to(index);
+    // Highlight active thumbnail
+    document.querySelectorAll("#photoThumbnails img").forEach(img => {
+        img.classList.remove("border-danger", "border-2");
+        img.classList.add("border-secondary");
+        img.style.opacity = "0.7";
+    });
+    if (thumbEl) {
+        thumbEl.classList.remove("border-secondary");
+        thumbEl.classList.add("border-danger", "border-2");
+        thumbEl.style.opacity = "1";
+    }
 }
 
 /**
