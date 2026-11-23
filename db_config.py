@@ -74,11 +74,17 @@ def init_sqlite_db():
         medicinal_uses TEXT,
         ecological_role TEXT,
         image_url TEXT DEFAULT '/static/images/plants/default_plant.jpg',
+        quantity INTEGER DEFAULT 0,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (category_id) REFERENCES categories (id)
     );
     """)
+
+    try:
+        cursor.execute("ALTER TABLE plants ADD COLUMN quantity INTEGER DEFAULT 0")
+    except Exception:
+        pass
 
     # Check if data already exists
     cursor.execute("SELECT COUNT(*) FROM categories")

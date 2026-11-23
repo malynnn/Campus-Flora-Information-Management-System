@@ -109,10 +109,15 @@
                                 <label class="form-label fw-semibold small">Conservation Status</label>
                                 <select name="conservation_status" class="form-select">
                                     <option value="Least Concern">Least Concern</option>
+                                    <option value="Concerning">Concerning</option>
                                     <option value="Vulnerable">Vulnerable</option>
                                     <option value="Endangered">Endangered</option>
                                     <option value="Critically Endangered">Critically Endangered</option>
                                 </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small">Quantity in PUPQC</label>
+                                <input type="number" name="quantity" class="form-control" min="0" placeholder="e.g. 15">
                             </div>
                             <div class="col-12">
                                 <label class="form-label fw-semibold small">Campus Location in PUPQC <span class="text-danger">*</span></label>
@@ -185,10 +190,15 @@
                                 <label class="form-label fw-semibold small">Conservation Status</label>
                                 <select id="editConservation" name="conservation_status" class="form-select">
                                     <option value="Least Concern">Least Concern</option>
+                                    <option value="Concerning">Concerning</option>
                                     <option value="Vulnerable">Vulnerable</option>
                                     <option value="Endangered">Endangered</option>
                                     <option value="Critically Endangered">Critically Endangered</option>
                                 </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small">Quantity in PUPQC</label>
+                                <input type="number" id="editQuantity" name="quantity" class="form-control" min="0" placeholder="e.g. 15">
                             </div>
                             <div class="col-12">
                                 <label class="form-label fw-semibold small">Campus Location in PUPQC <span class="text-danger">*</span></label>
@@ -273,7 +283,7 @@
                     <td class="fst-italic">${escapeHtml(p.scientific_name)}</td>
                     <td>${escapeHtml(p.family || '-')}</td>
                     <td><small>${escapeHtml(p.location_in_campus)}</small></td>
-                    <td><span class="badge ${p.conservation_status === 'Vulnerable' ? 'bg-warning text-dark' : p.conservation_status === 'Endangered' ? 'bg-orange' : p.conservation_status === 'Critically Endangered' ? 'bg-danger' : 'bg-success'}">${escapeHtml(p.conservation_status)}</span></td>
+                    <td><span class="badge ${p.conservation_status === 'Concerning' ? 'bg-orange text-white' : p.conservation_status === 'Vulnerable' ? 'bg-warning text-dark' : p.conservation_status === 'Endangered' ? 'bg-orange' : p.conservation_status === 'Critically Endangered' ? 'bg-danger' : 'bg-success'}">${escapeHtml(p.conservation_status)}</span></td>
                     <td class="text-center">
                         <button class="btn btn-sm btn-outline-primary me-1" onclick='openEditModal(${JSON.stringify(p)})'>
                             <i class="fas fa-edit"></i> Edit
@@ -322,6 +332,7 @@
             document.getElementById("editEcological").value   = plant.ecological_role || '';
             document.getElementById("editImageUrl").value     = plant.image_url || '';
             document.getElementById("editConservation").value = plant.conservation_status || 'Least Concern';
+            document.getElementById("editQuantity").value     = plant.quantity !== null && plant.quantity !== undefined ? plant.quantity : 0;
             // Set category after fetch populates the dropdown
             setTimeout(() => {
                 const sel = document.getElementById("editCategorySelect");

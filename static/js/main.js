@@ -190,6 +190,8 @@ function renderPlantGrid(plants) {
     plants.forEach(plant => {
         const statusBadgeClass = plant.conservation_status === "Vulnerable" 
             ? "badge-vulnerable" 
+            : plant.conservation_status === "Concerning"
+            ? "badge-concerning"
             : "badge-least-concern";
 
         const categoryName = plant.category_name || "Campus Flora";
@@ -221,6 +223,7 @@ function renderPlantGrid(plants) {
                             <div><i class="fas fa-layer-group"></i> <strong>Family:</strong> ${escapeHtml(plant.family)}</div>
                             <div><i class="fas fa-map-marker-alt"></i> <strong>Location:</strong> ${escapeHtml(plant.location_in_campus)}</div>
                             <div><i class="fas fa-tag"></i> <strong>Category:</strong> ${escapeHtml(categoryName)}</div>
+                            <div><i class="fas fa-hashtag"></i> <strong>Quantity in PUPQC:</strong> ${plant.quantity ? plant.quantity + ' individual(s)' : 'Not recorded'}</div>
                         </div>
                         <p class="card-text text-muted small flex-grow-1">
                             ${truncateText(plant.description || '', 90)}
@@ -257,11 +260,17 @@ async function openPlantModal(plantId) {
     document.getElementById("modalMedicinal").textContent = plant.medicinal_uses || "None specified.";
     document.getElementById("modalEcological").textContent = plant.ecological_role || "Provides campus greenery and urban microclimate moderation.";
 
+    const qtyEl = document.getElementById("modalQuantity");
+    if (qtyEl) {
+        qtyEl.textContent = plant.quantity ? `${plant.quantity} individual(s) recorded in PUPQC` : "Not recorded";
+    }
+
     // Set conservation badge color
     const conservationBadge = document.getElementById("modalConservation");
     const statusColorMap = {
         "Least Concern": "bg-success",
         "Vulnerable": "bg-warning text-dark",
+        "Concerning": "bg-orange text-white",
         "Endangered": "bg-orange text-white",
         "Critically Endangered": "bg-danger"
     };

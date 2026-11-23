@@ -105,6 +105,10 @@ def add_plant():
     medicinal_uses = data.get("medicinal_uses", "").strip()
     ecological_role = data.get("ecological_role", "").strip()
     image_url = data.get("image_url", "").strip() or None
+    try:
+        quantity = int(data.get("quantity", 0) or 0)
+    except (ValueError, TypeError):
+        quantity = 0
 
     if not common_name or not scientific_name or not location_in_campus:
         return jsonify({"status": "error", "message": "Common Name, Scientific Name, and Location in Campus are required."}), 400
@@ -112,10 +116,10 @@ def add_plant():
     db = get_db()
     sql = """
         INSERT INTO plants 
-        (common_name, scientific_name, family, category_id, local_name, conservation_status, location_in_campus, description, medicinal_uses, ecological_role, image_url)
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+        (common_name, scientific_name, family, category_id, local_name, conservation_status, location_in_campus, description, medicinal_uses, ecological_role, image_url, quantity)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
     """
-    params = (common_name, scientific_name, family, category_id, local_name, conservation_status, location_in_campus, description, medicinal_uses, ecological_role, image_url)
+    params = (common_name, scientific_name, family, category_id, local_name, conservation_status, location_in_campus, description, medicinal_uses, ecological_role, image_url, quantity)
     
     try:
         new_id = db.execute_insert(sql, params)
@@ -139,16 +143,21 @@ def update_plant(plant_id):
     medicinal_uses = data.get("medicinal_uses", "").strip()
     ecological_role = data.get("ecological_role", "").strip()
     image_url = data.get("image_url", "").strip()
+    try:
+        quantity = int(data.get("quantity", 0) or 0)
+    except (ValueError, TypeError):
+        quantity = 0
 
     db = get_db()
     sql = """
         UPDATE plants 
         SET common_name = %s, scientific_name = %s, family = %s, category_id = %s, 
             local_name = %s, conservation_status = %s, location_in_campus = %s, 
-            description = %s, medicinal_uses = %s, ecological_role = %s, image_url = %s
+            description = %s, medicinal_uses = %s, ecological_role = %s, image_url = %s,
+            quantity = %s
         WHERE id = %s
     """
-    params = (common_name, scientific_name, family, category_id, local_name, conservation_status, location_in_campus, description, medicinal_uses, ecological_role, image_url, plant_id)
+    params = (common_name, scientific_name, family, category_id, local_name, conservation_status, location_in_campus, description, medicinal_uses, ecological_role, image_url, quantity, plant_id)
     
     try:
         db.execute_update(sql, params)

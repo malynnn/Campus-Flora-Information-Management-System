@@ -349,6 +349,11 @@ body {
     color: #ffffff;
 }
 
+.badge-concerning {
+    background-color: #d84315;
+    color: #ffffff;
+}
+
 .badge-least-concern {
     background-color: #2e7d32;
     color: #ffffff;
