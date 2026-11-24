@@ -272,13 +272,13 @@ async function openPlantModal(plantId) {
     // Set conservation badge color
     const conservationBadge = document.getElementById("modalConservation");
     const statusColorMap = {
-        "Least Concern": "bg-success",
-        "Vulnerable": "bg-warning text-dark",
-        "Concerning": "bg-orange text-white",
-        "Endangered": "bg-orange text-white",
-        "Critically Endangered": "bg-danger"
+        "Least Concern": "badge-least-concern",
+        "Vulnerable": "badge-vulnerable",
+        "Concerning": "badge-concerning",
+        "Endangered": "badge-concerning",
+        "Critically Endangered": "badge-concerning"
     };
-    conservationBadge.className = "badge px-3 py-2 fs-6 " + (statusColorMap[plant.conservation_status] || "bg-success");
+    conservationBadge.className = "badge px-3 py-2 fs-6 " + (statusColorMap[plant.conservation_status] || "badge-least-concern");
 
     // Build carousel
     const carouselInner = document.getElementById("carouselInner");
